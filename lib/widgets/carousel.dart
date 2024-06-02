@@ -19,7 +19,8 @@ class _CarouselState extends State<Carousel> {
     scrollController.addListener(() {
       setState(() {
         currentIndex =
-            (scrollController.offset / widget.images.length).round();
+            (scrollController.offset / MediaQuery.of(context).size.width)
+                .round();
       });
     });
     super.initState();
@@ -40,19 +41,12 @@ class _CarouselState extends State<Carousel> {
             scrollDirection: Axis.horizontal,
             controller: scrollController,
             itemCount: widget.images.length,
-            itemExtent: MediaQuery
-                .of(context)
-                .size
-                .width,
-            itemBuilder: (context, index) =>
-                Image.asset(
-                  widget.images[index],
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  fit: BoxFit.fitHeight,
-                ),
+            itemExtent: MediaQuery.of(context).size.width,
+            itemBuilder: (context, index) => Image.asset(
+              widget.images[index],
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fitHeight,
+            ),
           ),
           Positioned.fill(
             child: Align(
@@ -68,20 +62,25 @@ class _CarouselState extends State<Carousel> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: widget.images
                         .map(
-                          (item) =>
-                          Padding(
+                          (item) => Padding(
                             padding: const EdgeInsets.all(6.0),
                             child: InkWell(
                               onTap: () {
                                 setState(() {
                                   currentIndex = widget.images.indexOf(item);
+                                  scrollController.animateTo(
+                                    currentIndex *
+                                        MediaQuery.of(context).size.width,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
                                 });
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: currentIndex ==
-                                      widget.images.indexOf(item)
+                                          widget.images.indexOf(item)
                                       ? Colors.blueAccent
                                       : Colors.grey,
                                 ),
@@ -90,10 +89,9 @@ class _CarouselState extends State<Carousel> {
                               ),
                             ),
                           ),
-                    )
+                        )
                         .toList(),
                   ),
-
                 ],
               ),
             ),

@@ -84,21 +84,27 @@ class _CarListPageState extends State<CarListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: carList
                   .map(
-                    (car) => showFavorite == false || car.isFavorite
-                        ? ListTile(
-                            leading: Image.asset(car.images[0]),
-                            title: Text(car.title),
-                            subtitle: Text(car.type),
-                            onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CarDetailPage(
-                                      car: car,
-                                    ),
-                                  ),
-                                ),
-                            trailing: const Icon(Icons.navigate_next))
-                        : Container(),
+                    (car) => AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (Widget child, Animation<double> animation) {
+                        return FadeTransition(opacity: animation, child: child);
+                      },
+                      child: showFavorite == false || car.isFavorite
+                          ? ListTile(
+                        key: ValueKey(car.id),
+                        leading: Image.asset(car.images[0]),
+                        title: Text(car.title),
+                        subtitle: Text(car.type),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CarDetailPage(car: car),
+                          ),
+                        ),
+                        trailing: const Icon(Icons.navigate_next),
+                      )
+                          : Container(),
+                    )
                   )
                   .toList(),
             ),
