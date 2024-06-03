@@ -18,7 +18,8 @@ class _CarListPageState extends State<CarListPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Car> carList = Provider.of<CarProvider>(context).carList;
+    CarProvider carProvider = Provider.of<CarProvider>(context);
+    List<Car> carList = carProvider.carList;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
