@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:toyota_interview_app/models/car_provider.dart';
 import 'package:toyota_interview_app/pages/car_list.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<CarProvider>(
+        create: (context) => CarProvider()..getAll())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,4 +26,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

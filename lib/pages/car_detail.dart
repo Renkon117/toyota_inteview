@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:toyota_interview_app/models/car.dart';
+import 'package:toyota_interview_app/models/car_provider.dart';
 import 'package:toyota_interview_app/widgets/carousel.dart';
 
 class CarDetailPage extends StatefulWidget {
-  const CarDetailPage({super.key, required this.car});
+  const CarDetailPage({super.key, required this.id});
 
-  final Car car;
+  final String id;
 
   @override
   State<CarDetailPage> createState() => _CarDetailPageState();
@@ -15,13 +17,14 @@ class _CarDetailPageState extends State<CarDetailPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    Car car = Provider.of<CarProvider>(context).carList.firstWhere((element) => element.id == widget.id);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.car.title),
+        title: Text(car.title),
       ),
       body: Column(
         children: <Widget>[
-          Carousel(images: widget.car.images),
+          Carousel(images: car.images),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -33,9 +36,9 @@ class _CarDetailPageState extends State<CarDetailPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Text(widget.car.title,
+                          Text(car.title,
                               style: theme.textTheme.titleLarge),
-                          Text(widget.car.subtitle,
+                          Text(car.subtitle,
                               style: theme.textTheme.labelSmall),
                         ],
                       ),
@@ -44,10 +47,10 @@ class _CarDetailPageState extends State<CarDetailPage> {
                         onPressed: () {
                           setState(() {
 
-                            widget.car.isFavorite = !widget.car.isFavorite;
+                            car.isFavorite = !car.isFavorite;
                           });
                         },
-                        icon: widget.car.isFavorite
+                        icon: car.isFavorite
                             ? const Icon(
                                 Icons.favorite,
                                 color: Colors.pink,
@@ -59,13 +62,13 @@ class _CarDetailPageState extends State<CarDetailPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text('色: ${widget.car.color}',
+                    Text('色: ${car.color}',
                         style: const TextStyle(color: Colors.grey)),
-                    Text('タイプ: ${widget.car.type}',
+                    Text('タイプ: ${car.type}',
                         style: const TextStyle(color: Colors.grey)),
                   ],
                 ),
-                Text(widget.car.description),
+                Text(car.description),
               ],
             ),
           )
