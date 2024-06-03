@@ -16,20 +16,21 @@ class _CarouselState extends State<Carousel> {
   @override
   void initState() {
     scrollController = ScrollController(initialScrollOffset: 0);
-    scrollController.addListener(() {
-      setState(() {
-        currentIndex =
-            (scrollController.offset / MediaQuery.of(context).size.width)
-                .round();
-      });
-    });
+    scrollController.addListener(_scrollListener);
     super.initState();
   }
 
   @override
   void dispose() {
+    scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.dispose();
+  }
+
+  void _scrollListener() {
+    setState(() {
+      currentIndex = (scrollController.offset / MediaQuery.of(context).size.width).round();
+    });
   }
 
   @override
@@ -41,7 +42,6 @@ class _CarouselState extends State<Carousel> {
             scrollDirection: Axis.horizontal,
             controller: scrollController,
             itemCount: widget.images.length,
-            itemExtent: MediaQuery.of(context).size.width,
             itemBuilder: (context, index) => Image.asset(
               widget.images[index],
               width: MediaQuery.of(context).size.width,
@@ -69,8 +69,7 @@ class _CarouselState extends State<Carousel> {
                                 setState(() {
                                   currentIndex = widget.images.indexOf(item);
                                   scrollController.animateTo(
-                                    currentIndex *
-                                        MediaQuery.of(context).size.width,
+                                    currentIndex * MediaQuery.of(context).size.width,
                                     duration: const Duration(milliseconds: 300),
                                     curve: Curves.easeInOut,
                                   );
