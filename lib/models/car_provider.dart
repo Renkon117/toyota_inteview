@@ -6,7 +6,7 @@ import 'package:toyota_interview_app/models/car.dart';
 class CarProvider extends ChangeNotifier {
 
   List<Car> carList = [];
-  void getAll(){
+  void getAll() {
     carList = [
       Car(
         id: '1',
