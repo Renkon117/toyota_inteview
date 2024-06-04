@@ -48,6 +48,7 @@ class _CarouselState extends State<Carousel> {
               fit: BoxFit.fitHeight,
             ),
           ),
+          // Indicator
           Positioned.fill(
             child: Align(
               alignment: Alignment.bottomCenter,
