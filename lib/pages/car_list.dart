@@ -50,7 +50,14 @@ class _CarListPageState extends State<CarListPage> {
                         child: showFavorite == false || car.isFavorite
                             ? ListTile(
                                 key: ValueKey(car.id),
-                                leading: Image.asset(car.images[0]),
+                                leading: FadeInImage(
+                                  fadeInCurve: Curves.easeIn,
+                                  fadeInDuration: const Duration(milliseconds: 200),
+                                  fadeOutCurve: Curves.easeOut,
+                                  fadeOutDuration: const Duration(milliseconds: 200),
+                                  placeholder: const AssetImage('assets/images/placeholder/placeholder.png'),
+                                  image: AssetImage(car.images[0]),
+                                ),
                                 title: Text(car.title),
                                 subtitle: Text(car.type),
                                 onTap: () async {
