@@ -51,10 +51,6 @@ class _CarListPageState extends State<CarListPage> {
                             ? ListTile(
                                 key: ValueKey(car.id),
                                 leading: FadeInImage(
-                                  fadeInCurve: Curves.easeIn,
-                                  fadeInDuration: const Duration(milliseconds: 200),
-                                  fadeOutCurve: Curves.easeOut,
-                                  fadeOutDuration: const Duration(milliseconds: 200),
                                   placeholder: const AssetImage('assets/images/placeholder/placeholder.png'),
                                   image: AssetImage(car.images[0]),
                                 ),

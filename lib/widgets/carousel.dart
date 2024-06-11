@@ -63,19 +63,19 @@ class _CarouselState extends State<Carousel> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: widget.images
                         .map(
-                          (item) => Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  currentIndex = widget.images.indexOf(item);
-                                  scrollController.animateTo(
-                                    currentIndex * MediaQuery.of(context).size.width,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInOut,
-                                  );
-                                });
-                              },
+                          (item) => InkWell(
+                            onTap: () {
+                              setState(() {
+                                currentIndex = widget.images.indexOf(item);
+                                scrollController.animateTo(
+                                  currentIndex * MediaQuery.of(context).size.width,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 4, bottom: 4, left: 6, right: 6),
                               child: Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
